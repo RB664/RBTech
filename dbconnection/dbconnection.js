@@ -8,4 +8,9 @@ var connection = mysql.createConnection({
     multipleStatements: true
 })
 
+connection.connect((err) => {
+    if(err) throw err
+    console.log(`Sever is up and running`)
+})
+
 module.exports = connection
