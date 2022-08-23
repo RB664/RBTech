@@ -1,1 +1,1 @@
-Web:node product.js
+Web:node index.js
