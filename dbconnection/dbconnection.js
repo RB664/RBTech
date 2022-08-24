@@ -1,6 +1,6 @@
 require('dotenv').config()
 const mysql = require('mysql')
-var connection = mysql.createConnection({
+var con = mysql.createConnection({
     host:process.env.DB_HOST,
     user:process.env.DB_USER,
     password:process.env.DB_PASSWORD,
@@ -8,9 +8,9 @@ var connection = mysql.createConnection({
     multipleStatements: true
 })
 
-connection.connect((err) => {
+con.connect((err) => {
     if(err) throw err
     console.log(`Sever is up and running`)
 })
 
-module.exports = connection
+module.exports = con
