@@ -5,11 +5,11 @@ const con = require('../dbconnection/dbconnection.js');
 const app = express();
 const router = express.Router();
 const bodyParser = require("body-parser");
-const e = require('express');
+
 
 // ADD TO CART
-let cart = [];
 router.post('/user/:id/cart', bodyParser.json(), (req, res) => {
+    try {
     let bd = req.body
     const cartQ = `
             SELECT Cart FROM User
@@ -18,10 +18,11 @@ router.post('/user/:id/cart', bodyParser.json(), (req, res) => {
     con.query(cartQ, (err, results) => {
         if (err) throw err
         if (results.length > 0) {
-            if (results[0].cart == null) {
-                // cart = []
+            let cart;
+            if (results[0].Cart === null) {
+                cart = []
             } else {
-                cart = JSON.parse(results[0].cart)
+                cart = JSON.parse(results[0].Cart)
             }
             let product = {
                 "cart_id": cart.length + 1,
@@ -31,13 +32,14 @@ router.post('/user/:id/cart', bodyParser.json(), (req, res) => {
                 "Category": bd.Category,
                 "Price": bd.Price,
             }
+
             cart.push(product);
             const query = `
                     UPDATE User
                     SET Cart = ?
                     WHERE userID = ${req.params.id}
                 `
-            con.query(query, JSON.stringify(cart), (err, results) => {
+            con.query(query, [JSON.stringify(cart)], (err, results) => {
                 if (err) throw err
                 res.json({
                     status: 200,
@@ -51,8 +53,13 @@ router.post('/user/:id/cart', bodyParser.json(), (req, res) => {
             })
         }
     })
+} catch (error) {
+        res.status(400).json({
+            error
+        })
+}
 })
-
+            
 // SHOW USER CART
 router.get('/user/:id/cart', (req, res) => {
     let cart = `SELECT Cart FROM User WHERE userID = ${req.params.id};`;
@@ -112,8 +119,8 @@ router.delete('/user/:id/cart/:cartId', (req, res) => {
                 const result = JSON.parse(results[0].Cart).filter((Cart) => {
                     return Cart.cart_id != req.params.cartId;
                 })
-                result.forEach((cart, i) => {
-                    cart.cart_id = i + 1
+                result.forEach((Cart, i) => {
+                    Cart.cart_id = i + 1
                 });
                 const query = `
                     UPDATE User
