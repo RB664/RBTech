@@ -74,7 +74,7 @@ router.get('/products',(req,res) => {
 
 // SHOW SINGLE PRODUCT
 router.get('/products/:id',(req,res) => {
-    let products = `SELECT * FROM Products WHERE ID = ${req.params.id};`;
+    let products = `SELECT * FROM Products WHERE productID = ${req.params.id};`;
     con.query(products,(err,results) => {
         if(err){
             console.log(err)
@@ -121,7 +121,7 @@ router.post('/products',bodyParser.json(),(req,res)=>{
 
 //  DELETE PRODUCT
 router.delete('/products/:id',(req, res) => {
-    let deleteproduct = `DELETE FROM Products WHERE ID = ${req.params.id}`;
+    let deleteproduct = `DELETE FROM Products WHERE productID = ${req.params.id}`;
     con.query(deleteproduct, (err) => {
         if (err) {
             res.redirect('/error')
