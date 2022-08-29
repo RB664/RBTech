@@ -113,7 +113,7 @@ router.post('/products',bodyParser.json(),(req,res)=>{
         ],(err,newProduct) => {
             if(err) throw err
             res.json({
-                msg: "Lets go Ridhaa"
+                msg: "Lets go"
             })
             // console.log(newProduct)
         })
@@ -123,10 +123,10 @@ router.post('/products',bodyParser.json(),(req,res)=>{
 router.delete('/products/:id',(req, res) => {
     let deleteproduct = `DELETE FROM Products WHERE productID = ${req.params.id}`;
     con.query(deleteproduct, (err) => {
-        if (err) {
-            res.redirect('/error')
-            console.log(err)
-        }
+        if (err) throw err 
+        res.json({
+            msg: "life"
+        })
     })
 })
 
