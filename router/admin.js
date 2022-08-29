@@ -111,11 +111,11 @@ router.post('/products',bodyParser.json(),(req,res)=>{
             Category,
             Price,
         ],(err,newProduct) => {
-            if(err){
-                res.redirect('/error')
-                console.log(err)
-            }
-            console.log(newProduct)
+            if(err) throw err
+            res.json({
+                msg: "Lets go Ridhaa"
+            })
+            // console.log(newProduct)
         })
 })
 
