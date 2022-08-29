@@ -145,7 +145,7 @@ router.put('/products/:id',bodyParser.json(), (req,res) => {
     Information = ?,
     Category = ?,
     Price = ?
-    WHERE ID = ${req.params.id}`;
+    WHERE productID = ${req.params.id}`;
 
     con.query(editproduct, [
         Name,
@@ -158,7 +158,9 @@ router.put('/products/:id',bodyParser.json(), (req,res) => {
             res.redirect('/error')
             console.log(err)
         }
-        res.end(JSON.stringify(editproduct))
+        res.json({
+            msg : 'nice'
+        })
     })
 })
 
