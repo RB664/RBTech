@@ -11,7 +11,7 @@ const jwt = require('jsonwebtoken')
 
 //LOGIN
 router.post('/user/login',bodyParser.json(),(req,res) => {
-    let sql = `SELECT * FROM User WHERE Email LIKE ?`
+    let sql = `SELECT * FROM User WHERE Email = ?`
     let email = {
       Email : req.body.Email
     }
