@@ -115,7 +115,7 @@ router.post('/products',bodyParser.json(),(req,res)=>{
             res.json({
                 msg: "Lets go"
             })
-            // console.log(newProduct)
+            console.log(newProduct)
         })
 })
 
