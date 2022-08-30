@@ -9,6 +9,13 @@ const path = require("path");
 const bodyParser = require("body-parser");
 const port = parseInt(process.env.port) || 4000;
 
+app.use((req, res, next) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Headers", "*");
+    res.setHeader("Access-Control-Allow-Methods", "*");
+    res.setHeader("Access-Control-Allow-Credentials", "true");
+    next();
+});
 
 const admin = require('./router/admin')
 const cart = require('./router/cart')

@@ -154,12 +154,9 @@ router.put('/products/:id',bodyParser.json(), (req,res) => {
         Category,
         Price,
     ],(err,editproduct) => {
-        if (err) {
-            res.redirect('/error')
-            console.log(err)
-        }
+        if(err) throw err
         res.json({
-            msg : 'nice'
+            results : editproduct
         })
     })
 })
