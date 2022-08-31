@@ -107,7 +107,7 @@ router.delete('/user/:id/cart', (req, res) => {
 })
 
 // DELETE PRODUCT FROM CART
-router.delete('/user/:id/cart/:cartId', (req, res) => {
+router.delete('/user/:id/cart/:cart_id', (req, res) => {
     const delSingleCartId = `
         SELECT Cart FROM User
         WHERE userID = ${req.params.id}
@@ -117,7 +117,7 @@ router.delete('/user/:id/cart/:cartId', (req, res) => {
         if (results.length > 0) {
             if (results[0].Cart != null) {
                 const result = JSON.parse(results[0].Cart).filter((Cart) => {
-                    return Cart.cart_id != req.params.cartId;
+                    return Cart.cart_id != req.params.cart_id;
                 })
                 result.forEach((Cart, i) => {
                     Cart.cart_id = i + 1
@@ -131,19 +131,19 @@ router.delete('/user/:id/cart/:cartId', (req, res) => {
                     if (err) throw err;
                     res.json({
                         status: 200,
-                        result: "Successfully deleted item from cart"
+                        results: "Successfully deleted item from cart"
                     });
                 })
             } else {
                 res.json({
                     status: 400,
-                    result: "This user has an empty cart"
+                    results: "This user has an empty cart"
                 })
             }
         } else {
             res.json({
                 status: 400,
-                result: "There is no user with that id"
+                results: "There is no user with that id"
             });
         }
     })
