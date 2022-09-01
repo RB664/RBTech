@@ -19,17 +19,17 @@ router.post('/user/register', bodyParser.json(), async (req, res) => {
      res.send("Email Exist");
     console.log(results.length)
       }else{
-      let db = req.body;
-    db.Password = await bcrypt.hash(db.Password, 10)
-    db.JoinDate = `${new Date().toISOString().slice(0, 10)}`;
-    if (db.Role === '' || db.Role === null) {
-      db.Role = 'user'
+      let con = req.body;
+    con.Password = await bcrypt.hash(con.Password, 10)
+    con.JoinDate = `${new Date().toISOString().slice(0, 10)}`;
+    if (con.Role === '' || con.Role === null) {
+      con.Role = 'user'
     }
     let sql = `INSERT INTO User (Name, Email,Password, Role, JoinDate)VALUES (?, ?, ?, ?, ?);`
-    con.query(sql, [db.Name, db.Email, db.Password, db.Role, db.JoinDate], (err, results) => {
+    con.query(sql, [con.Name, con.Email, con.Password, con.Role, con.JoinDate], (err, results) => {
       if (err) throw err
       else {
-        res.send(db)
+        res.send(con)
       }
     })};
     })

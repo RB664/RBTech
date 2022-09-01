@@ -12,34 +12,32 @@ const jwt = require('jsonwebtoken')
 //LOGIN
 router.post('/user/login',bodyParser.json(),(req,res) => {
     let sql = `SELECT * FROM User WHERE Email = ?`
-    let email = {
-      Email : req.body.Email
-    }
-    con.query(sql,email.Email, async (err,results) => {
+    let {email, password} = req.body
+    con.query(sql, email, async (err,results) => {
+      // console.log(results)
       if(err) throw err
       if(results.length === 0){
         res.send(`No email found`)
       }else{
-        const isMatch = await bcrypt.compare(req.body.Password, results[0].Password);
+        const isMatch = await bcrypt.compare(password, results[0].Password);
         if(!isMatch){
           res.send('Password is Incorrect')
         }else{
-          const payload = {
-            User: {
+            user ={
                 Name: results[0].Name,
                 Email: results[0].Email,
                 Password: results[0].Password,
                 Role: results[0].Role,
                 JoinDate: results[0].JoinDate
             },
-        };
-        jwt.sign(payload, process.env.JWTSECRET, {
+        
+        jwt.sign(user, process.env.JWTSECRET, {
             expiresIn: "365d"
         }, (err, token) => {
             if (err) throw err;
-            res.send(token)
             res.json({
-              msg: results,
+              user: results,
+              msg : "Logged In",
               token
             })
         });

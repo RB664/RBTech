@@ -75,6 +75,21 @@ router.get('/user/:id/cart', (req, res) => {
         }
     })
 })
+// SHOW USER CART PRODUCT
+router.get('/user/:id/cart/1', (req, res) => {
+    let cart = `SELECT Cart FROM User WHERE userID = ${req.params.id};`;
+    con.query(cart, (err, cart) => {
+        if (err) {
+            console.log(err)
+            res.redirect('/error')
+        } else {
+            res.json({
+                status: 200,
+                product: JSON.parse(cart[0].Cart)
+            })
+        }
+    })
+})
 
 // DELETE PRODUCTS FROM CART
 router.delete('/user/:id/cart', (req, res) => {
