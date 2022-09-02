@@ -16,7 +16,9 @@ app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Credentials", "true");
     next();
 });
-
+app.use(cors({
+    origin: ['http://localhost:8080', 'http://127.0.0.1:8080']
+}));
 
 
 const admin = require('./router/admin')
@@ -25,7 +27,7 @@ const login = require('./router/login')
 const register = require('./router/register')
 
 app.set("port",process.env.PORT)
-app.use(router,express.json(),cors(),express.urlencoded({
+app.use(router,express.json(),express.urlencoded({
     extended : true
 }))
 
