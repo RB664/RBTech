@@ -64,15 +64,9 @@ router.post('/user/:id/cart', bodyParser.json(), (req, res) => {
 router.get('/user/:id/cart', (req, res) => {
     let cart = `SELECT Cart FROM User WHERE userID = ${req.params.id};`;
     con.query(cart, (err, cart) => {
-        if (err) {
-            console.log(err)
-            res.redirect('/error')
-        } else {
-            res.json({
-                status: 200,
-                product: JSON.parse(cart[0].Cart)
-            })
-        }
+        if (err) throw err;
+            res.json(JSON.parse(cart[0].Cart)
+            )
     })
 })
 // SHOW USER CART PRODUCT
