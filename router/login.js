@@ -25,6 +25,7 @@ router.post('/user/login',bodyParser.json(),(req,res) => {
         }else{
             user ={
                 Name: results[0].Name,
+                Image: results[0].Image,
                 Email: results[0].Email,
                 Password: results[0].Password,
                 Role: results[0].Role,

@@ -25,8 +25,8 @@ router.post('/user/register', bodyParser.json(), async (req, res) => {
     if (bd.Role === '' || bd.Role === null) {
       bd.Role = 'user'
     }
-    let sql = `INSERT INTO User (Name, Email,Password, Role, JoinDate)VALUES (?, ?, ?, ?, ?);`
-    con.query(sql, [bd.Name, bd.Email, hash, bd.Role, bd.JoinDate], (err, results) => {
+    let sql = `INSERT INTO User (Name, Image, Email,Password, Role, JoinDate)VALUES (?, ?, ?, ?, ?, ?);`
+    con.query(sql, [bd.Name, bd.Image, bd.Email, hash, bd.Role, bd.JoinDate], (err, results) => {
       if (err) throw err
       // else {
       //   res.send(con)
