@@ -38,7 +38,7 @@ router.post('/user/login',bodyParser.json(),(req,res) => {
             if (err) throw err;
             res.json({
               user: results,
-              msg : "Logged In",
+              msg : "Welcome to RBTech",
               token
             })
         });

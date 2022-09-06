@@ -32,7 +32,7 @@ router.post('/user/register', bodyParser.json(), async (req, res) => {
       //   res.send(con)
       // }
       res.json({
-        msg : 'U are in our db',
+        msg : 'You have Registered',
         userData : results
       })
     })};
