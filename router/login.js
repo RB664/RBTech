@@ -10,7 +10,7 @@ const bcrypt = require("bcrypt")
 const jwt = require('jsonwebtoken')
 
 //LOGIN
-router.post('/login', bodyParser.json(), (req, res) => {
+router.post('/user/login', bodyParser.json(), (req, res) => {
   let sql = `SELECT * FROM User WHERE Email = ?`
   let {
     email,
