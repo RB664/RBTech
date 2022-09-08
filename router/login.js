@@ -10,7 +10,7 @@ const bcrypt = require("bcrypt")
 const jwt = require('jsonwebtoken')
 
 //LOGIN
-router.post('/user/login', bodyParser.json(), (req, res) => {
+router.post('/login', bodyParser.json(), (req, res) => {
   let sql = `SELECT * FROM User WHERE Email = ?`
   let {
     email,
@@ -20,7 +20,9 @@ router.post('/user/login', bodyParser.json(), (req, res) => {
     // console.log(results)
     if (err) throw err
     if (results.length === 0) {
-      res.json({msg :`No email found`})
+      res.json({
+        msg: `No email found`
+      })
     } else {
       const isMatch = await bcrypt.compare(password, results[0].Password);
       if (!isMatch) {
