@@ -155,7 +155,7 @@ router.delete('/products/:id', (req, res) => {
 })
 
 // EDIT PRODUCT
-router.patch('/products/:id', bodyParser.json(), (req, res) => {
+router.put('/products/:id', bodyParser.json(), (req, res) => {
     let {
         Name,
         Image,
