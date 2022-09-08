@@ -26,7 +26,7 @@ router.post('/user/login', bodyParser.json(), (req, res) => {
     } else {
       const isMatch = await bcrypt.compare(password, results[0].Password);
       if (!isMatch) {
-        res.json({
+        res.send({
           msg: 'Password is Incorrect'
         })
       } else {
@@ -43,9 +43,9 @@ router.post('/user/login', bodyParser.json(), (req, res) => {
             expiresIn: "365d"
           }, (err, token) => {
             if (err) throw err;
-            res.json({
-              user: results[0],
-              msg: "Welcome to user",
+            res.send({
+              user: results,
+              msg: "Welcome User",
               token
             })
           });
