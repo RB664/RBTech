@@ -8,13 +8,13 @@ const bodyParser = require("body-parser");
 const e = require('express');
 
 // SHOW ALL USERS
-router.get('/user',(req,res) => {
+router.get('/user', (req, res) => {
     let users = `SELECT * FROM User`
-    con.query(users,(err,results) => {
-        if(err){
+    con.query(users, (err, results) => {
+        if (err) {
             console.log(err)
             res.redirect('/error')
-        }else{
+        } else {
             res.json({
                 status: 200,
                 users: results
@@ -24,72 +24,96 @@ router.get('/user',(req,res) => {
 })
 
 // SHOW SINGLE USER
-router.get('/user/:id',(req,res) => {
+router.get('/user/:id', (req, res) => {
     let user = `SELECT * FROM User WHERE userID = ${req.params.id};`;
-    con.query(user,(err,results) => {
-        if(err){
+    con.query(user, (err, results) => {
+        if (err) {
             console.log(err)
             res.redirect('/error')
-        }else{
+        } else {
             res.json({
                 status: 200,
-                user : results
+                user: results
             })
         }
     })
 })
 
 // DELETE SINGLE USER
-router.delete('/user/:id',(req,res) => {
+router.delete('/user/:id', (req, res) => {
     let user = `DELETE FROM User WHERE userID = ${req.params.id};`;
-    con.query(user,(err,results) => {
-        if(err){
+    con.query(user, (err, results) => {
+        if (err) {
             console.log(err)
             res.redirect('/error')
-        }else{
+        } else {
             res.json({
                 status: 200,
-                msg : `U gone`
+                msg: `U gone`
             })
         }
     })
 })
 
+// EDIT USER
+router.put('/user/:id', bodyParser.json(), async (req, res) => {
+    let {
+        Name,
+        Image,
+        Email
+    } = req.body;
+    let edituser = `UPDATE User SET 
+    Name = ?,
+        Image = ?,
+        Email = ? 
+        WHERE userID = ${req.params.id};`
+    con.query(edituser, [
+        Name,
+        Image,
+        Email
+    ], async (err, results) => {
+        if (err) throw err
+        res.json({
+            results: JSON.stringify(results)
+        })
+    })
+})
+
 
 // SHOW ALL PRODUCTS
-router.get('/products',(req,res) => {
+router.get('/products', (req, res) => {
     let products = `SELECT * FROM Products`
-    con.query(products,(err,results) => {
-        if(err){
+    con.query(products, (err, results) => {
+        if (err) {
             console.log(err)
             res.redirect('/error')
-        }else{
+        } else {
             res.json({
                 status: 200,
-                products : results
+                products: results
             })
         }
     })
 })
 
 // SHOW SINGLE PRODUCT
-router.get('/products/:id',(req,res) => {
+router.get('/products/:id', (req, res) => {
     let products = `SELECT * FROM Products WHERE productID = ${req.params.id};`;
-    con.query(products,(err,results) => {
-        if(err){
+    con.query(products, (err, results) => {
+        if (err) {
             console.log(err)
             res.redirect('/error')
-        }else{
+        } else {
             res.json({
                 status: 200,
-                product : results
+                product: results
             })
         }
     })
 })
 
 // ADD PRODUCT
-router.post('/products',bodyParser.json(),(req,res)=>{
+router.post('/products', bodyParser.json(), (req, res) => {
     let {
         Name,
         Image,
@@ -104,26 +128,26 @@ router.post('/products',bodyParser.json(),(req,res)=>{
         Price)
         Values(?,?,?,?,?)`
 
-        con.query(addproduct,[
-            Name,
-            Image,
-            Information,
-            Category,
-            Price,
-        ],(err,newProduct) => {
-            if(err) throw err
-            res.json({
-                msg: "Lets go"
-            })
-            console.log(newProduct)
+    con.query(addproduct, [
+        Name,
+        Image,
+        Information,
+        Category,
+        Price,
+    ], (err, newProduct) => {
+        if (err) throw err
+        res.json({
+            msg: "Lets go"
         })
+        console.log(newProduct)
+    })
 })
 
 //  DELETE PRODUCT
-router.delete('/products/:id',(req, res) => {
+router.delete('/products/:id', (req, res) => {
     let deleteproduct = `DELETE FROM Products WHERE productID = ${req.params.id}`;
     con.query(deleteproduct, (err) => {
-        if (err) throw err 
+        if (err) throw err
         res.json({
             msg: "life"
         })
@@ -131,8 +155,8 @@ router.delete('/products/:id',(req, res) => {
 })
 
 // EDIT PRODUCT
-router.patch('/products/:id',bodyParser.json(), (req,res) => {
-    let{
+router.patch('/products/:id', bodyParser.json(), (req, res) => {
+    let {
         Name,
         Image,
         Information,
@@ -153,10 +177,10 @@ router.patch('/products/:id',bodyParser.json(), (req,res) => {
         Information,
         Category,
         Price,
-    ],(err,editproduct) => {
-        if(err) throw err
+    ], (err, editproduct) => {
+        if (err) throw err
         res.json({
-            results : editproduct
+            results: editproduct
         })
     })
 })
