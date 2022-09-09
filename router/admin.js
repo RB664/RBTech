@@ -63,7 +63,7 @@ router.put('/user/:id', bodyParser.json(), async (req, res) => {
         Email
     } = req.body;
     let edituser = `UPDATE User SET 
-    Name = ?,
+        Name = ?,
         Image = ?,
         Email = ? 
         WHERE userID = ${req.params.id};`
